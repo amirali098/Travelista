@@ -21,9 +21,13 @@ def bloghome(request):
 def blogsingle(request,pid):
     try:
         post = posts.objects.filter(published_date__lte=timezone.now(), status=True).get(pk=pid)
+        previous_post=posts.objects.filter(published_date__lte=timezone.now(), status=True).exclude(id__gte=pid).last()
+        next_post=posts.objects.filter(published_date__lte=timezone.now(), status=True).exclude(id__lte=pid).last()
         post.counted_views+=1
         post.save()
-        context = {'post': post}
+        context = {'post': post,
+                   "previous_post":previous_post,
+                   "next_post":next_post}
         return render(request,'blog-single.html',context)
     except :
-        raise Http404("Post not found")
+         raise Http404("Post not found")
