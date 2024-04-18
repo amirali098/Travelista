@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 
 # Create your views here.
@@ -18,6 +19,11 @@ def bloghome(request):
     return render(request,'blog-home.html',context)
 
 def blogsingle(request,pid):
-    post = posts.objects.get(pk=pid)
-    context = {'post': post}
-    return render(request,'blog-single.html',context)
+    try:
+        post = posts.objects.filter(published_date__lte=timezone.now(), status=True).get(pk=pid)
+        post.counted_views+=1
+        post.save()
+        context = {'post': post}
+        return render(request,'blog-single.html',context)
+    except :
+        raise Http404("Post not found")
