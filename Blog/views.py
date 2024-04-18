@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.shortcuts import render
@@ -20,9 +20,11 @@ def bloghome(request):
 
 def blogsingle(request,pid):
     try:
-        post = posts.objects.filter(published_date__lte=timezone.now(), status=True).get(pk=pid)
+        # post = posts.objects.filter(published_date__lte=timezone.now(), status=True).get(pk=pid)
+        post = get_object_or_404(posts, published_date__lte=timezone.now(), status=True, pk=pid)
+
         previous_post=posts.objects.filter(published_date__lte=timezone.now(), status=True).exclude(id__gte=pid).last()
-        next_post=posts.objects.filter(published_date__lte=timezone.now(), status=True).exclude(id__lte=pid).last()
+        next_post=posts.objects.filter(published_date__lte=timezone.now(), status=True).exclude(id__lte=pid).first()
         post.counted_views+=1
         post.save()
         context = {'post': post,
