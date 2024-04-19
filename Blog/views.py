@@ -1,8 +1,7 @@
-from django.http import Http404
-from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
-from django.shortcuts import render
+from django.http import Http404
+from django.shortcuts import render, get_object_or_404
 from .models import posts
 from django.utils import timezone
 
@@ -19,10 +18,9 @@ def bloghome(request):
     return render(request,'blog-home.html',context)
 
 def blogsingle(request,pid):
-    try:
-        # post = posts.objects.filter(published_date__lte=timezone.now(), status=True).get(pk=pid)
-        post = get_object_or_404(posts, published_date__lte=timezone.now(), status=True, pk=pid)
 
+        #post = posts.objects.filter(published_date__lte=timezone.now(), status=True).get(id=pid)
+        post = get_object_or_404(posts, published_date__lte=timezone.now(), status=True, id=pid)
         previous_post=posts.objects.filter(published_date__lte=timezone.now(), status=True).exclude(id__gte=pid).last()
         next_post=posts.objects.filter(published_date__lte=timezone.now(), status=True).exclude(id__lte=pid).first()
         post.counted_views+=1
@@ -31,5 +29,5 @@ def blogsingle(request,pid):
                    "previous_post":previous_post,
                    "next_post":next_post}
         return render(request,'blog-single.html',context)
-    except :
-         raise Http404("Post not found")
+    # except :
+    #      raise Http404("Post not found")
