@@ -1,7 +1,7 @@
 from django.utils import timezone
 from django import template
 from django.shortcuts import get_object_or_404
-from Blog.models import posts
+from Blog.models import posts,Category
 
 register = template.Library()
 
@@ -30,3 +30,15 @@ def popularpost(arg=3):
     # postss=get_object_or_404(posts, published_date__lte=timezone.now(), status=True).order
     postss=posts.objects.filter( published_date__lte=timezone.now(), status=True).order_by('published_date')[:arg]
     return {'posts':postss}
+
+
+
+@register.inclusion_tag('blog-category.html')
+def categories():
+    postss=posts.objects.filter( published_date__lte=timezone.now(), status=True)
+    categories=Category.objects.all()
+    cat_dict = {}
+    for name in categories:
+        cat_dict[name]=postss.filter(category=name).count()
+    return {'categories':cat_dict}
+

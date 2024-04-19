@@ -7,6 +7,8 @@ from django.utils import timezone
 
 
 # Create your views here.
+def test(request):
+    return render(request,'blog-category.html')
 
 def index(request):
     return render(request,'index.html')
