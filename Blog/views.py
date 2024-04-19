@@ -14,8 +14,10 @@ def index(request):
     return render(request,'index.html')
 
 
-def bloghome(request):
+def bloghome(request,cat=None):
     post = posts.objects.filter(published_date__lte=timezone.now(),status=True)
+    if cat:
+        post=post.filter(category__name=cat)
     context = {'posts': post}
     return render(request,'blog-home.html',context)
 

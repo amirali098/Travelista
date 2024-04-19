@@ -15,7 +15,7 @@ def plus(a=2):
     return a+2
 
 
-#{{ post as tp }}
+#{% post as t %}
 
 
 @register.filter
