@@ -42,3 +42,8 @@ def categories():
         cat_dict[name]=postss.filter(category=name).count()
     return {'categories':cat_dict}
 
+
+@register.inclusion_tag('index-recent-areaa.html')
+def blog_recent():
+    postss=posts.objects.filter( published_date__lte=timezone.now(), status=True).order_by('-published_date')
+    return {'posts':postss}

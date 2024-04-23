@@ -4,6 +4,8 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from .models import posts
 from django.utils import timezone
+from django.core.paginator import Paginator
+
 
 
 # Create your views here.
@@ -16,8 +18,12 @@ def index(request):
 
 def bloghome(request,cat=None):
     post = posts.objects.filter(published_date__lte=timezone.now(),status=True)
+    paginator=Paginator(post,1)
+    page=request.GET.get("page")
+
     if cat:
         post=post.filter(category__name=cat)
+    post=paginator.get_page(page)
     context = {'posts': post}
     return render(request,'blog-home.html',context)
 
