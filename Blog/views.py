@@ -1,10 +1,12 @@
 
 # Create your views here.
-from django.http import Http404
+from django.contrib import messages
+from django.http import Http404,HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .models import posts
 from django.utils import timezone
 from django.core.paginator import Paginator
+from .forms  import ContactFormForm
 
 
 
@@ -41,3 +43,20 @@ def blogsingle(request,pid):
         return render(request,'blog-single.html',context)
     # except :
     #      raise Http404("Post not found")
+
+
+
+def contact_us(request):
+    if request.method == "GET":
+        return render(request, 'contact.html')
+    else:
+        form=ContactFormForm(request.POST)
+        if form.is_valid():
+            form.instance.name = 'Anonymous'
+            form.save()
+            messages.success(request,"Success")
+            return render(request,'contact.html',{'form':form})
+        else:
+            messages.error(request,"Error")
+            return HttpResponse("Failed")
+
