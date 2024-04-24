@@ -25,12 +25,12 @@
                                 <ul>
                                     {% for i in post.category.all %}
                                     <li>
-                                        <a href="{% static "#" %}">{{ i.name }}</a>
+                                        <a href="{% url  "category" cat=i.name %}">{{ i.name }}</a>
                                     </li>
                                     {% endfor %}
                                 </ul>
                             </div>
-                            <a href="{% static "#" %}"><h4 class="title">{{ post.title }}</h4></a>
+                            <a href="{% url  "blogsingle" pid=post.id %}"><h4 class="title">{{ post.title }}</h4></a>
                             <p>
                                 {{ post.content }}
                             </p>
