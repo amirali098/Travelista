@@ -8,5 +8,3 @@ class ContactFormForm(forms.ModelForm):
         class Meta:
             model = ContactForm
             fields = ['name','subject', 'email', 'message']
-
-
