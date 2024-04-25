@@ -25,20 +25,23 @@ from Contact_Us.sitemaps import StaticViewSitemap
 
 sitemaps = {
     "static": StaticViewSitemap,
-    "blog":BlogViewSitemap
+    "blog": BlogViewSitemap
 }
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('Blog.urls')),
-    path('contact_us',include('Contact_Us.urls')),
+    path('', include('Blog.urls')),
+    path('contact_us', include('Contact_Us.urls')),
 
-path(
-    "sitemap.xml",
-    sitemap,
-    {"sitemaps": sitemaps},
-    name="django.contrib.sitemaps.views.sitemap",
-)
+    path(
+        "sitemap.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
+    path('robots.txt', include('robots.urls'))
+
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

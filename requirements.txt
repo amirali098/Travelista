@@ -1,2 +1,3 @@
 Pillow
 django-extensions
+django-robots
