@@ -101,12 +101,5 @@
 {% endblock %}
 
 
-{% block popup %}
-{% if messages %}
-    {% for i in messages %}
-        <script> alert('{{ i }}'); </script>
-    {% endfor %}
-{% endif %}
-{% endblock %}
 </body>
 </html>
