@@ -42,14 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'robots',
+    'django_summernote',
     "debug_toolbar",
-    "taggit"
+    "taggit",
+
 ]
 
 SITE_ID = 2
 ROBOTS_USE_SITEMAP = True
 ROBOTS_USE_HOST = True
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -143,3 +144,5 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
