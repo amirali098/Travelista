@@ -5,6 +5,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
+
 # Create your models here.
 class Category(models.Model):
     name=models.CharField(max_length=250)
@@ -25,6 +27,7 @@ class posts(models.Model):
     image=models.ImageField(upload_to='blog',default='blog/default.jpg')
     status=models.BooleanField(default=False)
     counted_views=models.IntegerField(default=0)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title

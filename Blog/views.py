@@ -6,28 +6,31 @@ from django.shortcuts import render, get_object_or_404
 from .models import posts
 from django.utils import timezone
 from django.core.paginator import Paginator
-
+from taggit.models import Tag
 
 
 
 # Create your views here.
 def test(request):
-    return render(request,'blog-category.html')
+    return render(request, 'Blog/blog-category.html')
 
 def index(request):
     return render(request,'index.html')
 
 
-def bloghome(request,cat=None):
+def bloghome(request,cat=None, tag_names=None):
     post = posts.objects.filter(published_date__lte=timezone.now(),status=True)
-    paginator=Paginator(post,1)
-    page=request.GET.get("page")
 
     if cat:
         post=post.filter(category__name=cat)
-    post=paginator.get_page(page)
+    if  tag_names:
+        post=post.filter(tags__name= tag_names)
+
+    post = Paginator(post, 10)
+    page = request.GET.get("page")
+    post=post.get_page(page)
     context = {'posts': post}
-    return render(request,'blog-home.html',context)
+    return render(request, 'Blog/blog-home.html', context)
 
 def blogsingle(request,pid):
 
@@ -40,7 +43,7 @@ def blogsingle(request,pid):
         context = {'post': post,
                    "previous_post":previous_post,
                    "next_post":next_post}
-        return render(request,'blog-single.html',context)
+        return render(request, 'Blog/blog-single.html', context)
     # except :
     #      raise Http404("Post not found")
 

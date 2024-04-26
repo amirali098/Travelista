@@ -1,3 +1,5 @@
 Pillow
 django-extensions
 django-robots
+django-debug-toolbar
+django-taggit
