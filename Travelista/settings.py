@@ -145,4 +145,6 @@ INTERNAL_IPS = [
     # ...
 ]
 
+# summernote
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+SUMMERNOTE_THEME = 'bs4'

@@ -1,7 +1,7 @@
 from django.utils import timezone
 from django import template
 from django.shortcuts import get_object_or_404
-from Blog.models import posts,Category
+from Blog.models import Post,Category
 from taggit.managers import TaggableManager
 from taggit.models import Tag
 
@@ -31,14 +31,14 @@ def concat(values,arg=20):
 @register.inclusion_tag('Blog/blog-popularposts.html')
 def popularpost(arg=3):
     # postss=get_object_or_404(posts, published_date__lte=timezone.now(), status=True).order
-    postss=posts.objects.filter( published_date__lte=timezone.now(), status=True).order_by('published_date')[:arg]
+    postss=Post.objects.filter( published_date__lte=timezone.now(), status=True).order_by('published_date')[:arg]
     return {'posts':postss}
 
 
 
 @register.inclusion_tag('Blog/blog-category.html')
 def categories():
-    postss=posts.objects.filter( published_date__lte=timezone.now(), status=True)
+    postss=Post.objects.filter( published_date__lte=timezone.now(), status=True)
     categories=Category.objects.all()
     cat_dict = {}
     for name in categories:
@@ -48,7 +48,7 @@ def categories():
 
 @register.inclusion_tag('index-recent-areaa.html')
 def blog_recent():
-    postss=posts.objects.filter( published_date__lte=timezone.now(), status=True).order_by('-published_date')
+    postss=Post.objects.filter( published_date__lte=timezone.now(), status=True).order_by('-published_date')
     return {'posts':postss}
 
 

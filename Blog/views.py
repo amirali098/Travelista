@@ -2,8 +2,10 @@
 # Create your views here.
 from django.contrib import messages
 from django.http import Http404,HttpResponse
-from django.shortcuts import render, get_object_or_404
-from .models import posts
+from django.shortcuts import render, get_object_or_404, redirect
+
+from Blog.forms import CommentForm
+from .models import Post, Comment
 from django.utils import timezone
 from django.core.paginator import Paginator
 from taggit.models import Tag
@@ -19,7 +21,7 @@ def index(request):
 
 
 def bloghome(request,cat=None, tag_names=None):
-    post = posts.objects.filter(published_date__lte=timezone.now(),status=True)
+    post = Post.objects.filter(published_date__lte=timezone.now(),status=True)
 
     if cat:
         post=post.filter(category__name=cat)
@@ -33,17 +35,26 @@ def bloghome(request,cat=None, tag_names=None):
     return render(request, 'Blog/blog-home.html', context)
 
 def blogsingle(request,pid):
-
-        #post = posts.objects.filter(published_date__lte=timezone.now(), status=True).get(id=pid)
-        post = get_object_or_404(posts, published_date__lte=timezone.now(), status=True, id=pid)
-        previous_post=posts.objects.filter(published_date__lte=timezone.now(), status=True).exclude(id__gte=pid).last()
-        next_post=posts.objects.filter(published_date__lte=timezone.now(), status=True).exclude(id__lte=pid).first()
-        post.counted_views+=1
-        post.save()
-        context = {'post': post,
-                   "previous_post":previous_post,
-                   "next_post":next_post}
-        return render(request, 'Blog/blog-single.html', context)
+        if request.method == 'POST':
+            form=CommentForm(request.POST)
+            if form.is_valid():
+                form.save()
+            return redirect('blogsingle',pid=pid)
+        else:
+            #post = posts.objects.filter(published_date__lte=timezone.now(), status=True).get(id=pid)
+            post = get_object_or_404(Post, published_date__lte=timezone.now(), status=True, id=pid)
+            comments=Comment.objects.filter(post=post.id,approved=True)
+            previous_post=Post.objects.filter(published_date__lte=timezone.now(), status=True).exclude(id__gte=pid).last()
+            next_post=Post.objects.filter(published_date__lte=timezone.now(), status=True).exclude(id__lte=pid).first()
+            post.counted_views+=1
+            post.save()
+            form = CommentForm()
+            context = {'post': post,
+                       'form':form,
+                       'Comments':comments,
+                       "previous_post":previous_post,
+                       "next_post":next_post}
+            return render(request, 'Blog/blog-single.html', context)
     # except :
     #      raise Http404("Post not found")
 

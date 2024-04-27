@@ -16,7 +16,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-class posts(models.Model):
+class Post(models.Model):
 
     title=models.CharField(max_length=250)
     content=models.TextField(max_length=250)
@@ -38,6 +38,28 @@ class posts(models.Model):
     def test(self):
         return  'test'
 
+
+class Comment(models.Model):
+
+    name=models.CharField(max_length=250)
+    email=models.EmailField()
+    subject=models.CharField(max_length=250)
+    message=models.TextField(max_length=250)
+    post=models.ForeignKey(Post,on_delete=models.CASCADE)
+    create_date=models.DateTimeField(auto_now_add=True)
+    published_date=models.DateTimeField(default=timezone.now)
+    approved=models.BooleanField(default=False)
+
+
+
+    def __str__(self):
+        return self.subject
+
+    def get_absolute_url(self):
+        return  reverse('blogsingle',kwargs={'pid':self.id})
+
+    def test(self):
+        return  'test'
 
 
 
