@@ -1,10 +1,6 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render,redirect,reverse
-
-
-
-
-
+import smtplib
+from django.core.mail import send_mail
+from django.shortcuts import render,redirect,reverse,HttpResponse
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -25,7 +21,6 @@ class CustomUserCreationForm(UserCreationForm):
         return user
 
 
-
 def signup(request):
     if not request.user.is_authenticated:
         if request.method == "POST":
@@ -40,4 +35,6 @@ def signup(request):
             return render(request, "Account/signup.html", {'form': form})
     else:
         return redirect("/")
+
+
 
