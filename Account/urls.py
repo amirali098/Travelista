@@ -5,11 +5,11 @@
 
 from django.contrib.auth import views
 from django.urls import path
-from Account.views import signup,logout
+from Account.views import signup,logout_view
 
 urlpatterns = [
     path("login/", views.LoginView.as_view(), name="login"),
-    path("logout/", logout, name="logout"),
+    path("logout/", logout_view, name="logout"),
     path(
         "password_change/", views.PasswordChangeView.as_view(), name="password_change"
     ),

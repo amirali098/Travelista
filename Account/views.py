@@ -4,6 +4,8 @@ from django.shortcuts import render,redirect,reverse,HttpResponse
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth import *
+
 from django.contrib.auth.views import *
 
 class CustomUserCreationForm(UserCreationForm):
@@ -36,8 +38,7 @@ def signup(request):
     else:
         return redirect("/")
 
-
 @login_required
-def logout(request):
+def logout_view(request):
     logout(request)
     return redirect('/')
