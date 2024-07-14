@@ -19,6 +19,11 @@ def test(request):
 def index(request):
     return render(request,'index.html')
 
+from django.shortcuts import render
+
+def coming_soon(request):
+    return render(request, 'coming_soon.html')
+
 
 def bloghome(request,cat=None, tag_names=None):
     post = Post.objects.filter(published_date__lte=timezone.now(),status=True)

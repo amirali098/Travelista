@@ -32,7 +32,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Blog.urls')),
     path('contact_us', include('Contact_Us.urls')),
-
     path(
         "sitemap.xml",
         sitemap,
