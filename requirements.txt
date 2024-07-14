@@ -5,3 +5,5 @@ django-debug-toolbar
 django-allauth
 django_summernote
 django-taggit
+django-compressor
+

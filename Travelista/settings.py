@@ -45,8 +45,11 @@ INSTALLED_APPS = [
     'django_summernote',
     "debug_toolbar",
     "taggit",
+    'compressor',
 
 ]
+
+
 
 SITE_ID = 2
 ROBOTS_USE_SITEMAP = True
@@ -175,3 +178,19 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "lolo302011@gmail.com"
 EMAIL_HOST_PASSWORD = "aeksokyfgnsztglu"
+
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_ENABLED = True
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSMinFilter',
+]
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.jsmin.JSMinFilter',
+]
