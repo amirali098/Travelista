@@ -1,4 +1,6 @@
 {% load static %}
+{% load compress  static %}
+
 <head>
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,13 +30,20 @@
     <!--
     CSS
     ============================================= -->
-    <link rel="stylesheet" href=" {% static "css/linearicons.css" %}">
-    <link rel="stylesheet" href=" {% static "css/font-awesome.min.css" %}">
-    <link rel="stylesheet" href=" {% static "css/bootstrap.css" %}">
-    <link rel="stylesheet" href=" {% static "css/magnific-popup.css" %}">
-    <link rel="stylesheet" href=" {% static "css/jquery-ui.css" %}">
-    <link rel="stylesheet" href=" {% static "css/nice-select.css" %}">
-    <link rel="stylesheet" href=" {% static "css/animate.min.css" %}">
-    <link rel="stylesheet" href=" {% static "css/owl.carousel.css" %}">
-    <link rel="stylesheet" href=" {% static "css/main.css" %}">
+
+
+{% compress css %}
+
+   <link rel="stylesheet" href="{% static "css/linearicons.css" %}">
+    <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "css/magnific-popup.css" %}">
+    <link rel="stylesheet" href="{% static "css/jquery-ui.css" %}">
+    <link rel="stylesheet" href="{% static "css/nice-select.css" %}">
+    <link rel="stylesheet" href="{% static "css/animate.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/owl.carousel.css" %}">
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
+
+{% endcompress %}
+
 </head>
